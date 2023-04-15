@@ -4,8 +4,9 @@ class ImagesManager {
   static const String _jsonPath = 'assets/json';
 
 // For images
-  static const String logo = "$_imagePath/splash_logo.png";
- 
+  static const String logo = "$_imagePath/logo.png";
+  static const String searchIcon = "$_imagePath/Search.svg";
+
   // Json Images
   static const String loading = "$_jsonPath/loading.json";
   static const String error = "$_jsonPath/error.json";

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:RecipeX/api/settings.dart';
 import 'package:http/http.dart' as http;
 
+import '../keys/api_keys.dart';
 import 'errors.dart';
 
 class BaseAPI {
@@ -52,7 +53,7 @@ class BaseAPI {
   }
 
   Future<Map<String, dynamic>> get(Uri api,
-      {Map<String, String>? queryParams}) async {
+      {Map<String, dynamic>? queryParams}) async {
     try {
       var requestHeaders = headers();
       if (queryParams != null && queryParams.isNotEmpty) {
@@ -61,7 +62,7 @@ class BaseAPI {
       http.Response response = await http.get(api, headers: requestHeaders);
       final jsonData = jsonDecode(response.body);
 
-      if (response.statusCode == HttpStatus.unauthorized) {
+       if (response.statusCode == HttpStatus.unauthorized) {
         throw UnauthorizedException();
       } else if (response.statusCode == HttpStatus.internalServerError) {
         throw ServerErrorException();
@@ -98,11 +99,10 @@ class BaseAPI {
   Map<String, String> headers({
     String langResult = "en",
   }) {
-    // UserAccount? user = ref.read(sharedPrefProvider).getUser();
     var headers = {
       "Content-Type": "application/json",
-      "lang": langResult,
-      // "Authorization": user?.token ?? "",
+      'X-RapidAPI-Key': APIKeys.apiKey,
+      'X-RapidAPI-Host': APIKeys.apiHost
     };
 
     return headers;

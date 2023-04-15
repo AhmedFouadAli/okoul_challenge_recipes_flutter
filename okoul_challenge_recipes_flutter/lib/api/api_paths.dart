@@ -1,4 +1,5 @@
 class ApiPaths{
-  static String get recipes => 'recipes';
+  static String get recipesList => 'list';
+  static String get recipesDetail => 'get-more-info';
 
 }

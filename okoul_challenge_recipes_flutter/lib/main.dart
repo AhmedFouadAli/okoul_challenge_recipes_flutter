@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-// import 'firebase_options.dart';
+import 'constants/theme_manager.dart';
 import 'routing/app_router.dart';
 
 void main() async {
@@ -31,12 +31,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    FocusScope.of(context).unfocus();
     return MaterialApp.router(
       routerConfig: ref.watch(GoRoterProvider),
       debugShowCheckedModeBanner: false,
       title: 'RecipeX',
-      theme: ThemeData(fontFamily: 'Poppins'),
+      theme: getAppTheme(),
     );
   }
 }
