@@ -25,58 +25,61 @@ class RecipeCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(recipe.imageUrl),
-          fit: BoxFit.cover,
+    return Hero(
+      tag: recipe.id,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(recipe.imageUrl),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.circular(15),
+          color: ColorsManager.white,
         ),
-        borderRadius: BorderRadius.circular(15),
-        color: ColorsManager.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    ref
-                        .read(favoriteProvider.notifier)
-                        .state
-                        .forEach((element) {
-                      print(element);
-                    });
-                    ref.read(favoriteProvider.notifier).toggle(recipe);
-                  },
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_outline,
-                    color: isFavorite ? ColorsManager.red : ColorsManager.white,
-                    size: 30,
-                  )),
-              Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: ColorsManager.white,
-                  ),
-                  child: Text('⭐ ${recipe.rating}',
-                      style: const TextStyle(fontSize: 15))),
-            ],
-          ),
-          Text(
-            recipe.title,
-            style: const TextStyle(
-              color: ColorsManager.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      ref
+                          .read(favoriteProvider.notifier)
+                          .state
+                          .forEach((element) {
+                        print(element);
+                      });
+                      ref.read(favoriteProvider.notifier).toggle(recipe);
+                    },
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_outline,
+                      color: isFavorite ? ColorsManager.red : ColorsManager.white,
+                      size: 30,
+                    )),
+                Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: ColorsManager.white,
+                    ),
+                    child: Text('⭐ ${recipe.rating}',
+                        style: const TextStyle(fontSize: 15))),
+              ],
             ),
-          ),
-        ],
+            Text(
+              recipe.title,
+              style: const TextStyle(
+                color: ColorsManager.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

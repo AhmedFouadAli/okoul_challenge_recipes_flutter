@@ -209,9 +209,12 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(
-          'https://source.unsplash.com/random',
-          fit: BoxFit.cover,
+        Hero(
+          tag: 400,
+          child: Image.network(
+            'https://source.unsplash.com/random',
+            fit: BoxFit.cover,
+          ),
         ),
         Positioned(
           top: 33,
