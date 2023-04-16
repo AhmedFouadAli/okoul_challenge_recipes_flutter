@@ -36,7 +36,8 @@ class FavoriteListScreen extends ConsumerWidget {
             gapH20,
             Expanded(
               child: favoriteRecipes.isEmpty
-                  ? Center(child: SingleChildScrollView(child: NoFavoritesScreen()))
+                  ? const Center(
+                      child: SingleChildScrollView(child: NoFavoritesScreen()))
                   : GridView.count(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),

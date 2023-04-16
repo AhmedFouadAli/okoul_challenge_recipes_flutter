@@ -132,8 +132,15 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                           crossAxisCount: 2,
                           children: recipes
                               .map(
-                                (recipe) => RecipeCard(
-                                  recipe: recipe,
+                                (recipe) => InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                        AppRoute.recipeDetail.name,
+                                         );
+                                  },
+                                  child: RecipeCard(
+                                    recipe: recipe,
+                                  ),
                                 ),
                               )
                               .toList()),
