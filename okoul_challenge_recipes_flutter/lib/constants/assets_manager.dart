@@ -6,6 +6,7 @@ class ImagesManager {
 // For images
   static const String logo = "$_imagePath/logo.png";
   static const String searchIcon = "$_imagePath/Search.svg";
+  static const String noFavoriteIcon = "$_imagePath/no_favorite_icon.svg";
 
   // Json Images
   static const String loading = "$_jsonPath/loading.json";

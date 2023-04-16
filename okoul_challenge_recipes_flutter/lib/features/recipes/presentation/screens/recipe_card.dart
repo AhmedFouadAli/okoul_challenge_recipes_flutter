@@ -1,31 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/colors_manager.dart';
+import '../../../favorite/presentation/controllers/favorite_controller.dart';
+import '../../domain/models/recipe.dart';
 
-class RecipeCard extends StatelessWidget {
-  final String title;
-  final String imageLink;
-  final dynamic rating;
-  final bool isFavorite;
+class RecipeCard extends ConsumerWidget {
+  final Recipe recipe;
 
-  const RecipeCard({
-    Key? key,
-    required this.title,
-    required this.imageLink,
-    required this.rating,
-    required this.isFavorite,
-  }) : super(key: key);
+  RecipeCard({
+    super.key,
+    required this.recipe,
+  });
+
+  final isFavoriteProvider = StateProvider.family<bool, int>((ref, id) {
+    final currentState = ref.watch(favoriteProvider);
+    return currentState
+        .where((element) => element.id == id)
+        .toList()
+        .isNotEmpty;
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
     return Container(
-       width: 160,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(imageLink),
+          image: NetworkImage(recipe.imageUrl),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(15),
@@ -38,26 +43,36 @@ class RecipeCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(
-                Icons.favorite_outline,
-                color: ColorsManager.white,
-                size: 30,
-              ),
+              IconButton(
+                  onPressed: () {
+                    ref
+                        .read(favoriteProvider.notifier)
+                        .state
+                        .forEach((element) {
+                      print(element);
+                    });
+                    ref.read(favoriteProvider.notifier).toggle(recipe);
+                  },
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_outline,
+                    color: isFavorite ? ColorsManager.red : ColorsManager.white,
+                    size: 30,
+                  )),
               Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: ColorsManager.white,
                   ),
-                  child:
-                      Text('⭐ $rating', style: const TextStyle(fontSize: 15))),
+                  child: Text('⭐ ${recipe.rating}',
+                      style: const TextStyle(fontSize: 15))),
             ],
           ),
           Text(
-            title,
+            recipe.title,
             style: const TextStyle(
               color: ColorsManager.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),

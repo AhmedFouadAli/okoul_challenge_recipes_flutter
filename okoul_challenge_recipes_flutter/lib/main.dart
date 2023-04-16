@@ -23,7 +23,7 @@ void main() async {
     // ignore errors here, maybe it's already trusted
   }
 
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

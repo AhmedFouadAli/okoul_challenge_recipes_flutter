@@ -10,5 +10,6 @@ class RecipeDetails extends Recipe {
     required title,
     required imageUrl,
     required rating,
-  }) : super(title: title, imageUrl: imageUrl, rating: rating);
+    required id,
+  }) : super(title: title, imageUrl: imageUrl, rating: rating,id:id);
 }

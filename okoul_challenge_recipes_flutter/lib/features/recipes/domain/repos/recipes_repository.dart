@@ -16,7 +16,7 @@ final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
 });
 
 final fetchRecipeListProvider =
-    FutureProvider.family<List<Recipe>, String>((ref, from) async {
+    FutureProvider.autoDispose.family<List<Recipe>, String>((ref, from) async {
   return ref.read(recipeRepositoryProvider).fetchRecipeList(from: from.split("|")[1],query: from.split("|")[0]);
 });
 

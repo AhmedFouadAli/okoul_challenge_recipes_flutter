@@ -1,19 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_sizes.dart';
 import '../../../../constants/colors_manager.dart';
+import '../../../../routing/app_router.dart';
 import '../../domain/repos/recipes_repository.dart';
 import 'loading_recipe_card.dart';
 import 'no_recipes_screen.dart';
 import 'recipe_card.dart';
 import 'recipe_search_text_field.dart';
 
-class RecipesListScreen extends ConsumerWidget {
-  const RecipesListScreen({super.key});
+final isLoadingProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+class RecipesListScreen extends ConsumerStatefulWidget {
+  RecipesListScreen({super.key});
+  final _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RecipesListScreen> createState() => _RecipesListScreenState();
+}
+
+class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget._scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget._scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  void _onScroll() async {
+    final maxScroll = widget._scrollController.position.maxScrollExtent;
+    final currentScroll = widget._scrollController.position.pixels;
+    const delta =
+        50.0; // distance from the bottom to trigger loading more recipes
+    if (maxScroll - currentScroll <= delta && !ref.read(isLoadingProvider)) {
+      // Todo:Adding more item when reaching to the end
+      ref.read(isLoadingProvider.notifier).update((state) => !state);
+      await Future.delayed(const Duration(seconds: 2));
+      ref.read(isLoadingProvider.notifier).update((state) => !state);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final recipes = ref.watch(
         fetchRecipeListProvider("${ref.watch(userSearchInputProvider)}|0"));
 
@@ -22,7 +59,12 @@ class RecipesListScreen extends ConsumerWidget {
         title: const Text('Discover Recipes '),
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          searchFieldController.clear();
+          ref.invalidate(userSearchInputProvider);
+
+          context.pushNamed(AppRoute.favoritesList.name);
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(ColorsManager.white),
           foregroundColor: MaterialStateProperty.all(ColorsManager.black),
@@ -33,37 +75,78 @@ class RecipesListScreen extends ConsumerWidget {
         ),
         child: const Text("Favorite ❤"),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 0, left: 13, right: 13, bottom: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const RecipesSearchTextField(),
-            gapH20,
-            Expanded(
-              child: recipes.when(
-                loading: () => const LoadingRecipeCard(),
-                error: (error, stack) => Center(
-                  child: Text(error.toString()),
-                ),
-                data: (recipes) => recipes.isEmpty
-                    ? const SingleChildScrollView(child: NoRecipesScreen())
-                    : GridView.count(
-                        crossAxisCount: 2,
-                        children: recipes
-                            .map(
-                              (recipe) => RecipeCard(
-                                title: recipe.title,
-                                imageLink: recipe.imageUrl,
-                                rating: recipe.rating,
-                                isFavorite: false,
-                              ),
-                            )
-                            .toList()),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(fetchRecipeListProvider(
+              "${ref.watch(userSearchInputProvider)}|0"));
+        },
+        child: Container(
+          padding:
+              const EdgeInsets.only(top: 0, left: 13, right: 13, bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const RecipesSearchTextField(
+                hintText: "Search for recipes ",
               ),
-            )
-          ],
+              gapH20,
+              Expanded(
+                child: recipes.when(
+                  loading: () => const LoadingRecipeCard(),
+                  error: (error, stack) => Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Something went wrong'),
+                        Text(error.toString()),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorsManager.black),
+                              foregroundColor: MaterialStateProperty.all(
+                                  ColorsManager.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              )),
+                            ),
+                            onPressed: () {
+                              ref.invalidate(fetchRecipeListProvider(
+                                  "${ref.watch(userSearchInputProvider)}|0"));
+                            },
+                            child: const Text(
+                              "Try again",
+                              style: TextStyle(color: ColorsManager.white),
+                            ))
+                      ],
+                    ),
+                  ),
+                  data: (recipes) => recipes.isEmpty
+                      ? const SingleChildScrollView(child: NoRecipesScreen())
+                      : GridView.count(
+                          controller: widget._scrollController,
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          crossAxisCount: 2,
+                          children: recipes
+                              .map(
+                                (recipe) => RecipeCard(
+                                  recipe: recipe,
+                                ),
+                              )
+                              .toList()),
+                ),
+              ),
+              if (ref.watch(isLoadingProvider))
+                const Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(13.0),
+                  child: CircularProgressIndicator(),
+                ))
+            ],
+          ),
         ),
       ),
     );
