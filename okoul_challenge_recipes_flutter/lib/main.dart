@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/theme_manager.dart';
 import 'routing/app_router.dart';
+import 'utils/app_prefs.dart';
 
 void main() async {
   // To remove the # when running the project in the web
@@ -23,7 +25,16 @@ void main() async {
     // ignore errors here, maybe it's already trusted
   }
 
-  runApp(const ProviderScope(child: MyApp()));
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+
+  runApp(ProviderScope(overrides: [
+    sharedPreferencesProvider.overrideWithValue(
+      AppPreferences(
+        sharedPreferences: sharedPreferences,
+      ),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

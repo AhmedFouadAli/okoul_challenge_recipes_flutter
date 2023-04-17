@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../constants/app_sizes.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../routing/app_router.dart';
+import '../../../recipes/domain/models/recipe.dart';
 import '../../../recipes/presentation/screens/recipe_card.dart';
 import '../../../recipes/presentation/screens/recipe_detail.dart';
 import '../../../recipes/presentation/screens/recipe_search_text_field.dart';
@@ -21,7 +22,7 @@ class FavoriteListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteRecipes = ref.watch(favoriteBySearchProvider);
+    final List<Recipe> favoriteRecipes = ref.watch(favoriteProvider);
 
     return Scaffold(
       appBar: AppBar(

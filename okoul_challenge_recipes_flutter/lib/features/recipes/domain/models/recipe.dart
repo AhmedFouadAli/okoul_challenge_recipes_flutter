@@ -30,8 +30,8 @@ class Recipe {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'title': title,
-      'imageUrl': imageUrl,
+      'name': title,
+      'thumbnail_url': imageUrl,
       'rating': rating,
     };
   }
