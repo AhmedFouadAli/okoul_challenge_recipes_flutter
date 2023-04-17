@@ -41,7 +41,7 @@ class Recipe {
       id: map['id'] as int,
       title: map['name'] as String,
       imageUrl: map['thumbnail_url'] as String,
-      rating: (map['user_ratings']?["score"] ?? 0.0) * 5.0,
+      rating: double.parse(((map['user_ratings']?["score"] ?? 0.0) * 5.0 as double).toStringAsFixed(2)),
     );
   }
 
