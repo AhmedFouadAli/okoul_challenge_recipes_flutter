@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:go_router/go_router.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -29,10 +31,14 @@ final GoRoterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => FavoriteListScreen(),
       ),
       GoRoute(
-        path: '/recipeDetail',
-        name: AppRoute.recipeDetail.name,
-        builder: (context, state) => const RecipeDetail(),
-      ),
+          path: '/recipeDetail/:id',
+          name: AppRoute.recipeDetail.name,
+          builder: (context, state) {
+            log(state.params.toString());
+            final recipeId = state.params['id']!;
+            log(recipeId);
+            return RecipeDetailScreen(recipeId: recipeId);
+          }),
     ],
   );
 });

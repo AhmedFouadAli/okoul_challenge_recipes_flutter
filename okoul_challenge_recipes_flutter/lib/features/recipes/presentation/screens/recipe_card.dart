@@ -9,22 +9,13 @@ import '../../domain/models/recipe.dart';
 class RecipeCard extends ConsumerWidget {
   final Recipe recipe;
 
-  RecipeCard({
+  const RecipeCard({
     super.key,
     required this.recipe,
   });
 
-  final isFavoriteProvider = StateProvider.family<bool, int>((ref, id) {
-    final currentState = ref.watch(favoriteProvider);
-    return currentState
-        .where((element) => element.id == id)
-        .toList()
-        .isNotEmpty;
-  });
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
     return Hero(
       tag: recipe.id,
       child: Container(
@@ -45,21 +36,7 @@ class RecipeCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                    onPressed: () {
-                      ref
-                          .read(favoriteProvider.notifier)
-                          .state
-                          .forEach((element) {
-                        print(element);
-                      });
-                      ref.read(favoriteProvider.notifier).toggle(recipe);
-                    },
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_outline,
-                      color: isFavorite ? ColorsManager.red : ColorsManager.white,
-                      size: 30,
-                    )),
+                BuildFavoriteRecipe(recipe: recipe),
                 Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -82,5 +59,39 @@ class RecipeCard extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class BuildFavoriteRecipe extends ConsumerWidget {
+  BuildFavoriteRecipe({
+    super.key,
+    required this.recipe,
+  });
+
+  final Recipe recipe;
+
+  final isFavoriteProvider = StateProvider.family<bool, int>((ref, id) {
+    final currentState = ref.watch(favoriteProvider);
+    return currentState
+        .where((element) => element.id == id)
+        .toList()
+        .isNotEmpty;
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
+    return IconButton(
+        onPressed: () {
+          ref.read(favoriteProvider.notifier).state.forEach((element) {
+            print(element);
+          });
+          ref.read(favoriteProvider.notifier).toggle(recipe);
+        },
+        icon: Icon(
+          isFavorite ? Icons.favorite : Icons.favorite_outline,
+          color: isFavorite ? ColorsManager.red : ColorsManager.white,
+          size: 30,
+        ));
   }
 }

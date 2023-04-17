@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/colors_manager.dart';
+import '../../../../routing/app_router.dart';
 import '../../../recipes/presentation/screens/recipe_card.dart';
+import '../../../recipes/presentation/screens/recipe_detail.dart';
 import '../../../recipes/presentation/screens/recipe_search_text_field.dart';
 import '../controllers/favorite_controller.dart';
 import 'no_favorite_screen.dart';
@@ -22,6 +26,15 @@ class FavoriteListScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Recipes  '),
+        leading: BuildReusableIcon(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: ColorsManager.white,
+          ),
+          onPressed: () {
+            context.pushNamed(AppRoute.recipesList.name);
+          },
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 0, left: 13, right: 13, bottom: 10),
@@ -44,8 +57,16 @@ class FavoriteListScreen extends ConsumerWidget {
                       crossAxisCount: 2,
                       children: favoriteRecipes
                           .map(
-                            (recipe) => RecipeCard(
-                              recipe: recipe,
+                            (recipe) => InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  AppRoute.recipeDetail.name,
+                                  params: {'id': recipe.id.toString()},
+                                );
+                              },
+                              child: RecipeCard(
+                                recipe: recipe,
+                              ),
                             ),
                           )
                           .toList()),

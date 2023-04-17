@@ -1,111 +1,140 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/loading_recipe_detail.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/colors_manager.dart';
+import '../../../favorite/presentation/controllers/favorite_controller.dart';
+import '../../domain/models/recipe_details.dart';
+import '../../domain/repos/recipes_repository.dart';
 
-class RecipeDetail extends ConsumerWidget {
-  const RecipeDetail({Key? key}) : super(key: key);
+class RecipeDetailScreen extends ConsumerWidget {
+  RecipeDetailScreen({
+    super.key,
+    required this.recipeId,
+  });
+
+  final String recipeId;
+  final isFavoriteProvider = StateProvider.family<bool, int>((ref, id) {
+    final currentState = ref.watch(favoriteProvider);
+    return currentState
+        .where((element) => element.id == id)
+        .toList()
+        .isNotEmpty;
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final recipe = ref.watch(fetchRecipeDetailProvider(recipeId));
     return Scaffold(
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        slivers: [
-          SliverPersistentHeader(
-            delegate: MySliverAppBar(
-              expandedHeight: 300,
+      body: recipe.when(
+        data: (recipe) => CustomScrollView(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          slivers: [
+            SliverPersistentHeader(
+              delegate: MySliverAppBar(
+                expandedHeight: 300,
+                recipe: recipe,
+              ),
+              floating: true,
+              pinned: true,
             ),
-            floating: true,
-            pinned: true,
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Text(
-                'Ingredients',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: ColorsManager.white,
-                  fontWeight: FontWeight.bold,
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                child: Text(
+                  'Ingredients',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: ColorsManager.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return BuildCheckList(title: "asdasd", quantity: "1 cup");
-              },
-              childCount: 5,
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                'Instructions',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: ColorsManager.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            sliver: SliverList(
+            SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 40,
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(bottom: 30),
-                          decoration: BoxDecoration(
-                            color: ColorsManager.black,
-                            borderRadius: BorderRadius.circular(5),
+                  return BuildCheckList(
+                      title: recipe.ingredients[index].name,
+                      quantity:
+                          "${recipe.ingredients[index].quantity} ${recipe.ingredients[index].unit}");
+                },
+                childCount: recipe.ingredients.length,
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Instructions',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: ColorsManager.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8, bottom: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 40,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: ColorsManager.black,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                (index + 1).toString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: ColorsManager.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                          child: Center(
+                          gapW12,
+                          Expanded(
                             child: Text(
-                              (index + 1).toString(),
+                              recipe.instructions[index],
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 color: ColorsManager.white,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
-                        ),
-                        gapW12,
-                        const Expanded(
-                          child: Text(
-                            'Preheat the oven to 375°sssssssssssssssssssssssssssssssssssssssssssssssssssssssF.',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: ColorsManager.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                childCount: 30,
+                        ],
+                      ),
+                    );
+                  },
+                  childCount: recipe.instructions.length,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        error: (Object error, StackTrace stackTrace) {
+          return Text(error.toString());
+        },
+        loading: () =>
+            const SingleChildScrollView(child: LoadingRecipeDetail()),
       ),
     );
   }
@@ -126,39 +155,41 @@ class BuildCheckList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isChecked = ref.watch(isCheckedProvider);
+
     return SizedBox(
-      height: 35,
       child: CheckboxListTile(
         dense: true,
         checkColor: ColorsManager.white,
         activeColor: ColorsManager.backGroundApp,
-
         checkboxShape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
         contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
         value: isChecked,
         onChanged: (bool? value) {
           ref.read(isCheckedProvider.notifier).update((state) => value!);
-        }, // the callback when the checkbox is changed
+        },
         title: Row(
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                decorationColor: ColorsManager.black,
-                decorationThickness: 2,
-                decoration: isChecked
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-                fontSize: 15,
-                color: ColorsManager.white,
-                fontWeight: FontWeight.w600,
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 2, // Limit the text to 2 lines
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  decorationColor: ColorsManager.black,
+                  decorationThickness: 2,
+                  decoration: isChecked
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  fontSize: 15,
+                  color: ColorsManager.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            const Spacer(),
-            const Text(
-              '1 cup',
-              style: TextStyle(
+            Text(
+              quantity,
+              style: const TextStyle(
                 fontSize: 13,
                 color: ColorsManager.white,
                 fontWeight: FontWeight.w400,
@@ -167,7 +198,6 @@ class BuildCheckList extends ConsumerWidget {
             gapW16
           ],
         ),
-
         controlAffinity: ListTileControlAffinity.leading,
       ),
     );
@@ -180,7 +210,7 @@ class BuildReusableIcon extends StatelessWidget {
     required this.icon,
     required this.onPressed,
   }) : super(key: key);
-  final IconData icon;
+  final Widget icon;
   final Function() onPressed;
 
   @override
@@ -188,20 +218,19 @@ class BuildReusableIcon extends StatelessWidget {
     return CircleAvatar(
       radius: 25,
       backgroundColor: ColorsManager.backGroundApp.withAlpha(100),
-      child: IconButton(
-          onPressed: onPressed,
-          icon: Icon(
-            icon,
-            color: ColorsManager.white,
-          )),
+      child: IconButton(onPressed: onPressed, icon: icon),
     );
   }
 }
 
 class MySliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
+  final RecipeDetails recipe;
 
-  MySliverAppBar({required this.expandedHeight});
+  MySliverAppBar({
+    required this.expandedHeight,
+    required this.recipe,
+  });
 
   @override
   Widget build(
@@ -212,7 +241,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
         Hero(
           tag: 400,
           child: Image.network(
-            'https://source.unsplash.com/random',
+            recipe.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
@@ -220,28 +249,28 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
           top: 33,
           left: 16,
           child: BuildReusableIcon(
-            icon: Icons.arrow_back_ios_new,
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: ColorsManager.white,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ),
         Positioned(
-          top: 33,
-          right: 16,
-          child: BuildReusableIcon(
-            icon: Icons.favorite_border_outlined,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        const Positioned(
+            top: 33,
+            right: 16,
+            child: CircleAvatar(
+                radius: 25,
+                backgroundColor: ColorsManager.backGroundApp.withAlpha(100),
+                child: BuildFavoriteRecipe(recipe: recipe))),
+        Positioned(
             bottom: 50,
             left: 23,
             child: Text(
-              "Chocolate Chip Cookies",
-              style: TextStyle(
+              recipe.title,
+              style: const TextStyle(
                 color: ColorsManager.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -256,7 +285,8 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
                 borderRadius: BorderRadius.circular(15),
                 color: ColorsManager.white,
               ),
-              child: const Text('⭐ ${4.8}', style: TextStyle(fontSize: 15))),
+              child: Text('⭐ ${(recipe.rating as double).toStringAsFixed(3)}',
+                  style: const TextStyle(fontSize: 15))),
         ),
       ],
     );

@@ -17,17 +17,26 @@ final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
 
 final fetchRecipeListProvider =
     FutureProvider.autoDispose.family<List<Recipe>, String>((ref, from) async {
-  return ref.read(recipeRepositoryProvider).fetchRecipeList(from: from.split("|")[1],query: from.split("|")[0]);
+  return ref
+      .read(recipeRepositoryProvider)
+      .fetchRecipeList(from: from.split("|")[1], query: from.split("|")[0]);
+});
+
+final fetchRecipeDetailProvider =
+    FutureProvider.autoDispose.family<RecipeDetails, String>((ref, id) async {
+  return ref.read(recipeRepositoryProvider).fetchRecipeDetail(id: id);
 });
 
 abstract class RecipeRepository {
-  Future<List<Recipe>> fetchRecipeList({required String from,required String query});
-  Future<RecipeDetails> fetchRecipeDetail({required int id});
+  Future<List<Recipe>> fetchRecipeList(
+      {required String from, required String query});
+  Future<RecipeDetails> fetchRecipeDetail({required String id});
 }
 
 class RecipeRepositoryImpl extends BaseAPI implements RecipeRepository {
   @override
-  Future<List<Recipe>> fetchRecipeList({required String from, required String query}) async {
+  Future<List<Recipe>> fetchRecipeList(
+      {required String from, required String query}) async {
     final getAddressApi = getAPI(ApiPaths.recipesList);
     final queryParameter = {
       "from": from,
@@ -36,9 +45,7 @@ class RecipeRepositoryImpl extends BaseAPI implements RecipeRepository {
     };
     final response =
         await super.get(getAddressApi, queryParams: queryParameter);
-        log(response.toString());
-
-
+    log(response.toString());
 
     final resultRecipe = response["results"] as List<dynamic>;
 
@@ -51,8 +58,20 @@ class RecipeRepositoryImpl extends BaseAPI implements RecipeRepository {
   }
 
   @override
-  Future<RecipeDetails> fetchRecipeDetail({required int id}) {
-    // TODO: implement fetchRecipeDetail
-    throw UnimplementedError();
+  Future<RecipeDetails> fetchRecipeDetail({required String id}) async {
+    final getAddressApi = getAPI(ApiPaths.recipeDetail);
+    final queryParameter = {
+      "id": id,
+    };
+    log("---**--" * 20);
+    final response =
+        await super.get(getAddressApi, queryParams: queryParameter);
+    log(response.toString());
+
+    final RecipeDetails recipe = RecipeDetails.fromMap(response);
+
+    log(recipe.toString());
+
+    return recipe;
   }
 }

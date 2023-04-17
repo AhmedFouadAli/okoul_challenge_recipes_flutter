@@ -136,6 +136,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                                   onTap: () {
                                     context.pushNamed(
                                         AppRoute.recipeDetail.name,
+                                        params: {'id': recipe.id.toString()},
                                          );
                                   },
                                   child: RecipeCard(
