@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/theme_manager.dart';
 import 'routing/app_router.dart';
+import 'routing/watching_connection.dart';
 import 'utils/app_prefs.dart';
 
 void main() async {
@@ -28,6 +29,10 @@ void main() async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
+  final container = ProviderContainer();
+  // 2. Use it to read the provider
+  container.read(watchingInternetConnectionNotifierProvider);
+
   runApp(ProviderScope(observers: [
     Logger(),
   ], overrides: [
@@ -44,6 +49,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return MaterialApp.router(
       routerConfig: ref.watch(GoRoterProvider),
       debugShowCheckedModeBanner: false,

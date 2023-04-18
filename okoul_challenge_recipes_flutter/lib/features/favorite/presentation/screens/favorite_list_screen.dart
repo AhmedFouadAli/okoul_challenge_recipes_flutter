@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../constants/app_constant.dart';
 import '../../../../constants/app_sizes.dart';
 import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
@@ -22,6 +23,7 @@ class FavoriteListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final List<Recipe> favoriteRecipes = ref.watch(favoriteBySearchProvider);
 
     return Scaffold(
@@ -49,25 +51,37 @@ class FavoriteListScreen extends ConsumerWidget {
               child: favoriteRecipes.isEmpty
                   ? const Center(
                       child: SingleChildScrollView(child: NoFavoritesScreen()))
-                  : GridView.count(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      crossAxisCount: 2,
-                      children: favoriteRecipes
-                          .map(
-                            (recipe) => InkWell(
-                              onTap: () {
-                                context.pushNamed(
-                                  AppRoute.recipeDetail.name,
-                                  params: {'id': recipe.id.toString()},
-                                );
-                              },
-                              child: RecipeCard(
-                                recipe: recipe,
-                              ),
-                            ),
-                          )
-                          .toList()),
+                  : LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        // Calculate the desired item width based on how many items you want to show
+                        double itemWidth = Constant.itemWidth;
+
+                        // Calculate the number of columns that will fit based on the available width
+                        int crossAxisCount =
+                            (constraints.maxWidth / itemWidth).floor();
+
+                        return GridView.count(
+                            physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            crossAxisCount: 2,
+                            children: favoriteRecipes
+                                .map(
+                                  (recipe) => InkWell(
+                                    onTap: () {
+                                      context.pushNamed(
+                                        AppRoute.recipeDetail.name,
+                                        params: {'id': recipe.id.toString()},
+                                      );
+                                    },
+                                    child: RecipeCard(
+                                      recipe: recipe,
+                                    ),
+                                  ),
+                                )
+                                .toList());
+                      },
+                    ),
             ),
           ],
         ),

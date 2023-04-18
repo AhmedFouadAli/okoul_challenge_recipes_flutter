@@ -4,12 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../api/api_paths.dart';
 import '../../../../api/base.dart';
+import '../../../../constants/app_constant.dart';
 import '../models/recipe.dart';
 import '../models/recipe_details.dart';
 
-class Constant {
-  static const requestSize = 20;
-}
 
 final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
   return RecipeRepositoryImpl();

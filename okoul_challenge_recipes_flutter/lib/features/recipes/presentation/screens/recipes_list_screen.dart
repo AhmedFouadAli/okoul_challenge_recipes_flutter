@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../constants/app_constant.dart';
 import '../../../../constants/app_sizes.dart';
 import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../routing/app_router.dart';
+import '../../../../routing/watching_connection.dart';
 import '../controllers/recipes_controller.dart';
 import 'loading_recipe_card.dart';
 import 'no_recipes_screen.dart';
@@ -34,6 +36,28 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
     widget._scrollController.addListener(_onScroll);
   }
 
+  // Your code here
+  Future<void> connection() async {
+    // Your code here
+    await Future.delayed(const Duration(seconds: 5));
+    final connection = ref.watch(watchingInternetConnectionNotifierProvider);
+    if (connection) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: ColorsManager.orange,
+          content: Text('you are connected to the  internet '),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: ColorsManager.red,
+          content: Text('you are not  connected to the  internet '),
+        ),
+      );
+    }
+  }
+
   @override
   void dispose() {
     widget._scrollController.removeListener(_onScroll);
@@ -57,7 +81,9 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    connection();
     final recipes = ref.watch(asyncNotifierProvider);
+
     // final recipes = ref.watch(
     //     fetchRecipeListProvider("${ref.watch(userSearchInputProvider)}|${ref.watch(fromCounterProvider)}"));
 
@@ -151,7 +177,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                           : LayoutBuilder(builder: (BuildContext context,
                               BoxConstraints constraints) {
                               // Calculate the desired item width based on how many items you want to show
-                              double itemWidth = 300.0;
+                              double itemWidth = Constant.itemWidth;
 
                               // Calculate the number of columns that will fit based on the available width
                               int crossAxisCount =

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../constants/app_constant.dart';
 import '../../../../constants/colors_manager.dart';
 
 class LoadingRecipeCard extends StatelessWidget {
@@ -15,7 +16,7 @@ class LoadingRecipeCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           // Calculate the desired item width based on how many items you want to show
-          double itemWidth = 300.0;
+          double itemWidth = Constant.itemWidth;
 
           // Calculate the number of columns that will fit based on the available width
           int crossAxisCount = (constraints.maxWidth / itemWidth).floor();
