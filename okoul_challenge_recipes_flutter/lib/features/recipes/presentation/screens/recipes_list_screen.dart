@@ -36,25 +36,27 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
     widget._scrollController.addListener(_onScroll);
   }
 
-  // Your code here
   Future<void> connection() async {
-    // Your code here
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
+
     final connection = ref.watch(watchingInternetConnectionNotifierProvider);
-    if (connection) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: ColorsManager.orange,
-          content: Text('you are connected to the  internet '),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: ColorsManager.red,
-          content: Text('you are not  connected to the  internet '),
-        ),
-      );
+    log(connection.toString());
+    if (!connection.isLoading && connection.value != connectionStatus.initial) {
+      if (connection.value == connectionStatus.connected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: ColorsManager.orange,
+            content: Text('you are connected to the  internet '),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: ColorsManager.red,
+            content: Text('you are not  connected to the  internet '),
+          ),
+        );
+      }
     }
   }
 

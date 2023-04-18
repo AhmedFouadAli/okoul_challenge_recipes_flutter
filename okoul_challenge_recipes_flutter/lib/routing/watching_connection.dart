@@ -1,36 +1,45 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WatchingInternetConnectionNotifier extends Notifier<bool> {
+enum connectionStatus { initial, connected, notConnected }
+
+class WatchingInternetConnectionNotifier
+    extends AsyncNotifier<connectionStatus> {
   @override
-  build() {
-    initConnectivity();
-    return false;
+  FutureOr<connectionStatus> build() async {
+    await initConnectivity();
+    return connectionStatus.initial;
   }
 
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
 
-  void initConnectivity() async {
-    log("initConnectivity");
+  Future<void> initConnectivity() async {
     Connectivity connectivity = Connectivity();
     _connectivityResult = await connectivity.checkConnectivity();
+    connectionStatus previousStatus =
+        _connectivityResult == ConnectivityResult.none
+            ? connectionStatus.notConnected
+            : connectionStatus.connected; // set initial previous status
+    state = AsyncValue.data(_connectivityResult != ConnectivityResult.none
+        ? connectionStatus.connected
+        : connectionStatus.notConnected); // set initial state
     connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      log(result.toString());
-
-      if (result == ConnectivityResult.none) {
-        log("false");
-        state = false;
-      } else {
-                log("True");
-
-        state = true;
+      if (result == ConnectivityResult.none &&
+          previousStatus == connectionStatus.connected) {
+        state = const AsyncValue.data(connectionStatus.notConnected);
+      } else if (result != ConnectivityResult.none &&
+          previousStatus == connectionStatus.notConnected) {
+        state = const AsyncValue.data(connectionStatus.connected);
       }
+      previousStatus = result == ConnectivityResult.none
+          ? connectionStatus.notConnected
+          : connectionStatus.connected; // update previous status
     });
   }
 }
 
 final watchingInternetConnectionNotifierProvider =
-    NotifierProvider<WatchingInternetConnectionNotifier, bool>(
+    AsyncNotifierProvider<WatchingInternetConnectionNotifier, connectionStatus>(
         WatchingInternetConnectionNotifier.new);
