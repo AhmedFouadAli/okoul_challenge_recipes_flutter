@@ -18,4 +18,6 @@ class AppStrings {
   static const error404NotFound = "404 - Page not found!";
   static const titleFavorite = 'Favorite Recipes  ';
   static const hintFavoriteSearch = "Search for  your favorite recipes  ";
+  static const connectToInternet = 'you are connected to the  internet ';
+  static const notConnectToInternet = 'you are not connected to the  internet ';
 }

@@ -7,6 +7,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/theme_manager.dart';
+import 'features/recipes/presentation/controllers/recipes_controller.dart';
 import 'routing/app_router.dart';
 import 'utils/app_prefs.dart';
 
@@ -28,17 +29,21 @@ void main() async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
-
-
-  runApp(ProviderScope(observers: [
-    Logger(),
-  ], overrides: [
-    sharedPreferencesProvider.overrideWithValue(
-      AppPreferences(
-        sharedPreferences: sharedPreferences,
+  final container = ProviderContainer(
+    observers: [
+      Logger(),
+    ],
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(
+        AppPreferences(
+          sharedPreferences: sharedPreferences,
+        ),
       ),
-    ),
-  ], child: const MyApp()));
+    ],
+  );
+  container.read(asyncNotifierProvider.notifier).fetchRecipes();
+
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

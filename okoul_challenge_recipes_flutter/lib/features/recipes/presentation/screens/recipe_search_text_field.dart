@@ -29,7 +29,7 @@ class RecipesSearchTextField extends ConsumerWidget {
         // after search the User must see some response after typing
 
         if (userInput.isNotEmpty) {
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 250));
         }
         ref.read(userSearchInputProvider.notifier).update((state) => userInput);
       },

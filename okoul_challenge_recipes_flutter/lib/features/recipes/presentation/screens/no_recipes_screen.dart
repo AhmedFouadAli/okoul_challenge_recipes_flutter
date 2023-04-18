@@ -14,47 +14,45 @@ class NoRecipesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SvgPicture.asset(ImagesManager.searchIcon),
-        gapH20,
-        const Text(
-          AppStrings.noResult,
-          style: TextStyle(
-            color: ColorsManager.white,
-            fontSize: 20,
-          ),
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      SvgPicture.asset(ImagesManager.searchIcon),
+      gapH20,
+      const Text(
+        AppStrings.noResult,
+        style: TextStyle(
+          color: ColorsManager.white,
+          fontSize: 20,
         ),
-        gapH4,
-        const Text(
-          AppStrings.tryDifferentWords,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorsManager.white,
-            fontSize: 20,
-          ),
+      ),
+      gapH4,
+      const Text(
+        AppStrings.tryDifferentWords,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: ColorsManager.white,
+          fontSize: 20,
         ),
-        const Text(
-          AppStrings.justClick,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorsManager.grey,
-            fontSize: 15,
-          ),
+      ),
+      const Text(
+        AppStrings.justClick,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: ColorsManager.grey,
+          fontSize: 15,
         ),
-        Wrap(
+      ),
+      Wrap(
 
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              BuildSuggestionBox(title: "chechen"),
-              BuildSuggestionBox(title: "chechen"),
-              BuildSuggestionBox(title: "chechen"),
-              BuildSuggestionBox(title: "chechen"),
-              BuildSuggestionBox(title: "chechen"),
-              BuildSuggestionBox(title: "chechen"),
-            ])
-      ]),
-    );
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "chechen"),
+          ])
+    ]);
   }
 }
 

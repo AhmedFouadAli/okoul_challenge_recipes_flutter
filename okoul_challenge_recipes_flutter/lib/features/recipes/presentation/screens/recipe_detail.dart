@@ -12,6 +12,7 @@ import '../../../../routing/app_router.dart';
 import '../../../favorite/presentation/controllers/favorite_controller.dart';
 import '../../domain/models/recipe_details.dart';
 import '../../domain/repos/recipes_repository.dart';
+import 'error_recipe_list.dart';
 
 class RecipeDetailScreen extends ConsumerWidget {
   RecipeDetailScreen({
@@ -133,9 +134,13 @@ class RecipeDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
-        error: (Object error, StackTrace stackTrace) {
-          return Text(error.toString());
-        },
+        error: (Object error, StackTrace stackTrace)=>ErrorRecipeList(
+                          errorMessage: error.toString(),
+                          isLoading: recipe.isLoading,
+                          onPressed: ()=>ref
+                              .invalidate(fetchRecipeDetailProvider(recipeId))
+                              ,
+                        ),
         loading: () =>
             const SingleChildScrollView(child: LoadingRecipeDetail()),
       ),

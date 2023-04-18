@@ -11,6 +11,7 @@ import '../../../../constants/colors_manager.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../routing/watching_connection.dart';
 import '../controllers/recipes_controller.dart';
+import 'error_recipe_list.dart';
 import 'loading_recipe_card.dart';
 import 'no_recipes_screen.dart';
 import 'recipe_card.dart';
@@ -36,30 +37,6 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
     widget._scrollController.addListener(_onScroll);
   }
 
-  Future<void> connection() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    final connection = ref.watch(watchingInternetConnectionNotifierProvider);
-    log(connection.toString());
-    if (!connection.isLoading && connection.value != connectionStatus.initial) {
-      if (connection.value == connectionStatus.connected) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: ColorsManager.orange,
-            content: Text('you are connected to the  internet '),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: ColorsManager.red,
-            content: Text('you are not  connected to the  internet '),
-          ),
-        );
-      }
-    }
-  }
-
   @override
   void dispose() {
     widget._scrollController.removeListener(_onScroll);
@@ -81,11 +58,31 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    connection();
-    final recipes = ref.watch(asyncNotifierProvider);
+    final connection = ref.watch(watchingProvider);
+    ref.listen(watchingProvider, (previous, next) {
+      log(next.toString());
+      if (next.value == connectionStatus.connected &&
+          (previous?.value ?? connectionStatus.initial) ==
+              connectionStatus.notConnected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: ColorsManager.orange,
+            content: Text(AppStrings.connectToInternet),
+          ),
+        );
+      } else if (next.value == connectionStatus.notConnected &&
+          (previous?.value ?? connectionStatus.initial) ==
+              connectionStatus.connected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: ColorsManager.red,
+            content: Text(AppStrings.notConnectToInternet),
+          ),
+        );
+      }
+    });
 
-    // final recipes = ref.watch(
-    //     fetchRecipeListProvider("${ref.watch(userSearchInputProvider)}|${ref.watch(fromCounterProvider)}"));
+    final recipes = ref.watch(asyncNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +104,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.read(fromCounterProvider.notifier).update((state) => 0);
+          ref.read(fromCounterProvider.notifier).update((state) => 1);
         },
         child: Container(
           padding:
@@ -121,53 +118,12 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
               Expanded(
                 child: recipes.when(
                     loading: () => const LoadingRecipeCard(),
-                    error: (error, stack) => Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                AppStrings.wrongMessage,
-                                style: TextStyle(
-                                    fontSize: 20, color: ColorsManager.white),
-                              ),
-                              Text(
-                                "$error\n",
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 20, color: ColorsManager.white),
-                              ),
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        ColorsManager.black),
-                                    foregroundColor: MaterialStateProperty.all(
-                                        ColorsManager.white),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                    )),
-                                  ),
-                                  onPressed: recipes.isLoading
-                                      ? null
-                                      : () {
-                                          ref
-                                              .read(asyncNotifierProvider
-                                                  .notifier)
-                                              .fetchRecipes();
-                                        },
-                                  child: recipes.isLoading
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : const Text(
-                                          AppStrings.tryAgain,
-                                          style: TextStyle(
-                                              color: ColorsManager.white),
-                                        ))
-                            ],
-                          ),
+                    error: (error, stack) => ErrorRecipeList(
+                          errorMessage: error.toString(),
+                          isLoading: recipes.isLoading,
+                          onPressed: ref
+                              .read(asyncNotifierProvider.notifier)
+                              .fetchRecipes,
                         ),
                     data: (recipesData) {
                       log(recipesData.length.toString());
