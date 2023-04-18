@@ -2,25 +2,37 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../constants/colors_manager.dart';
+
 class LoadingRecipeCard extends StatelessWidget {
   const LoadingRecipeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: const Color(0xff717171),
-      highlightColor: const Color(0xff9E9E9E),
-      child: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(
-              30,
-              (index) => Card(
-                    elevation: 1.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const SizedBox(height: 300),
-                  ))),
+      baseColor: ColorsManager.baseColor,
+      highlightColor: ColorsManager.highlightColor,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          // Calculate the desired item width based on how many items you want to show
+          double itemWidth = 300.0;
+
+          // Calculate the number of columns that will fit based on the available width
+          int crossAxisCount = (constraints.maxWidth / itemWidth).floor();
+
+          return GridView.count(
+              crossAxisCount: crossAxisCount,
+              children: List.generate(
+                  30,
+                  (index) => Card(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const SizedBox(height: 300),
+                      )));
+        },
+      ),
     );
   }
 }

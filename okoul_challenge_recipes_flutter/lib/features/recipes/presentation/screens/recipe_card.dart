@@ -24,6 +24,7 @@ class RecipeCard extends ConsumerWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(recipe.imageUrl),
+            
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(15),

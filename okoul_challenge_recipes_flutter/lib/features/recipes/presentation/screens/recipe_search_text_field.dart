@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/colors_manager.dart';
+import '../controllers/recipes_controller.dart';
 
 final userSearchInputProvider = StateProvider<String>((ref) {
   return "";
@@ -39,8 +40,8 @@ class RecipesSearchTextField extends ConsumerWidget {
             ? null
             : IconButton(
                 onPressed: () {
-                  ref.invalidate(userSearchInputProvider);
-                  searchFieldController.clear();
+                   searchFieldController.clear();
+                   ref.read(asyncNotifierProvider.notifier).clearStateForSearching();
                 },
                 icon: const Icon(Icons.close),
                 color: Colors.grey),

@@ -21,24 +21,25 @@ final GoRoterProvider = Provider<GoRouter>((ref) {
     errorBuilder: (context, state) => NotFoundScreen(),
     routes: [
       GoRoute(
-        path: '/',
-        name: AppRoute.recipesList.name,
-        builder: (context, state) => RecipesListScreen(),
-      ),
-      GoRoute(
-        path: '/favorite',
-        name: AppRoute.favoritesList.name,
-        builder: (context, state) => FavoriteListScreen(),
-      ),
-      GoRoute(
-          path: '/recipeDetail/:id',
-          name: AppRoute.recipeDetail.name,
-          builder: (context, state) {
-            log(state.params.toString());
-            final recipeId = state.params['id']!;
-            log(recipeId);
-            return RecipeDetailScreen(recipeId: recipeId);
-          }),
+          path: '/',
+          name: AppRoute.recipesList.name,
+          builder: (context, state) => RecipesListScreen(),
+          routes: [
+            GoRoute(
+              path: 'favorite',
+              name: AppRoute.favoritesList.name,
+              builder: (context, state) => const FavoriteListScreen(),
+            ),
+            GoRoute(
+                path: 'recipeDetail/:id',
+                name: AppRoute.recipeDetail.name,
+                builder: (context, state) {
+                  log(state.params.toString());
+                  final recipeId = state.params['id']!;
+                  log(recipeId);
+                  return RecipeDetailScreen(recipeId: recipeId);
+                }),
+          ]),
     ],
   );
 });

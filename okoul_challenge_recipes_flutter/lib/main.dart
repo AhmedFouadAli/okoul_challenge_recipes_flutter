@@ -28,7 +28,9 @@ void main() async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
-  runApp(ProviderScope(overrides: [
+  runApp(ProviderScope(observers: [
+    Logger(),
+  ], overrides: [
     sharedPreferencesProvider.overrideWithValue(
       AppPreferences(
         sharedPreferences: sharedPreferences,
@@ -48,5 +50,13 @@ class MyApp extends ConsumerWidget {
       title: 'RecipeX',
       theme: getAppTheme(),
     );
+  }
+}
+
+class Logger extends ProviderObserver {
+  @override
+  void didUpdateProvider(ProviderBase provider, Object? newValue,
+      Object? oldValue, ProviderContainer container) {
+    // log('Riverpod managment -->: ${provider.name} value: $oldValue new: $newValue');
   }
 }

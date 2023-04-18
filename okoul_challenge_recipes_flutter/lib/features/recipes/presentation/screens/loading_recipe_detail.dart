@@ -16,8 +16,8 @@ class LoadingRecipeDetail extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
+            baseColor: ColorsManager.baseColor,
+            highlightColor: ColorsManager.highlightColor,
             child: Container(
               height: 200,
               decoration: BoxDecoration(
@@ -32,8 +32,11 @@ class LoadingRecipeDetail extends StatelessWidget {
           child: Shimmer(
             direction: ShimmerDirection.ltr,
             period: Duration(milliseconds: 1500),
-            gradient: LinearGradient(
-                colors: [Colors.grey, Colors.white, Colors.grey]),
+            gradient: LinearGradient(colors: [
+              ColorsManager.baseColor,
+              ColorsManager.highlightColor,
+              ColorsManager.baseColor
+            ]),
             child: Text(
               'Ingredients',
               style: TextStyle(
@@ -52,8 +55,8 @@ class LoadingRecipeDetail extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
+                baseColor: ColorsManager.baseColor,
+                highlightColor: ColorsManager.highlightColor,
                 child: const BuildLoadingIngredientItem(),
               );
             },
@@ -65,8 +68,11 @@ class LoadingRecipeDetail extends StatelessWidget {
           child: Shimmer(
             direction: ShimmerDirection.ltr,
             period: Duration(milliseconds: 1500),
-            gradient: LinearGradient(
-                colors: [Colors.grey, Colors.white, Colors.grey]),
+            gradient: LinearGradient(colors: [
+              ColorsManager.baseColor,
+              ColorsManager.highlightColor,
+              ColorsManager.baseColor
+            ]),
             child: Text(
               'Instructions',
               style: TextStyle(
@@ -85,14 +91,13 @@ class LoadingRecipeDetail extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
+                baseColor: ColorsManager.baseColor,
+                highlightColor: ColorsManager.highlightColor,
                 child: const BuildInstructionLoadingItem(),
               );
             },
           ),
         ),
-
       ],
     );
   }
@@ -106,8 +111,8 @@ class BuildInstructionLoadingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: ColorsManager.baseColor,
+      highlightColor: ColorsManager.highlightColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,8 +150,11 @@ class BuildLoadingIngredientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer(
-        gradient: const LinearGradient(
-            colors: [Colors.grey, Colors.white, Colors.grey]),
+        gradient: const LinearGradient(colors: [
+          ColorsManager.baseColor,
+          ColorsManager.highlightColor,
+          ColorsManager.baseColor
+        ]),
         direction: ShimmerDirection.ltr,
         period: const Duration(milliseconds: 1500),
         child: Row(
