@@ -87,9 +87,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const RecipesSearchTextField(
-                hintText: "Search for recipes ",
-              ),
+              const RecipesSearchTextField(),
               gapH20,
               Expanded(
                 child: recipes.when(
@@ -98,8 +96,17 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Something went wrong'),
-                        Text(error.toString()),
+                        const Text(
+                          'Something went wrong\n',
+                          style: TextStyle(
+                              fontSize: 20, color: ColorsManager.white),
+                        ),
+                        Text(
+                          "$error\n",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 20, color: ColorsManager.white),
+                        ),
                         ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -112,14 +119,22 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                                 borderRadius: BorderRadius.circular(18.0),
                               )),
                             ),
-                            onPressed: () {
-                              ref.invalidate(fetchRecipeListProvider(
-                                  "${ref.watch(userSearchInputProvider)}|0"));
-                            },
-                            child: const Text(
-                              "Try again",
-                              style: TextStyle(color: ColorsManager.white),
-                            ))
+                            onPressed: recipes.isLoading
+                                ? null
+                                : () {
+                                    ref.invalidate(fetchRecipeListProvider(
+                                        "${ref.watch(userSearchInputProvider)}|0"));
+                                  },
+                            child: recipes.isLoading
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const Text(
+                                    "Try again",
+                                    style:
+                                        TextStyle(color: ColorsManager.white),
+                                  ))
                       ],
                     ),
                   ),
@@ -135,9 +150,9 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                                 (recipe) => InkWell(
                                   onTap: () {
                                     context.pushNamed(
-                                        AppRoute.recipeDetail.name,
-                                        params: {'id': recipe.id.toString()},
-                                         );
+                                      AppRoute.recipeDetail.name,
+                                      params: {'id': recipe.id.toString()},
+                                    );
                                   },
                                   child: RecipeCard(
                                     recipe: recipe,

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/app_prefs.dart';
 import '../../../recipes/domain/models/recipe.dart';
-import '../../../recipes/presentation/screens/recipe_search_text_field.dart';
+import '../screens/recipe_search_favorite.dart';
 
 class FavoriteNotifier extends Notifier<List<Recipe>> {
   @override

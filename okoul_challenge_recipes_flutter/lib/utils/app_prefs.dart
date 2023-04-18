@@ -22,9 +22,9 @@ class AppPreferences {
   List<Recipe> getFavorites() {
     String? favorites = sharedPreferences.getString(_favorites);
     if (favorites != null) {
-      
+
       return (jsonDecode(favorites) as List<dynamic>)
-          .map((e) => Recipe.fromJson(e))
+          .map((e) => Recipe.fromJsonFavorite(e))
           .toList();
     }
     return [];

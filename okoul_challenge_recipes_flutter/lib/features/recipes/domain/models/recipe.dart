@@ -44,11 +44,22 @@ class Recipe {
       rating: double.parse(((map['user_ratings']?["score"] ?? 0.0) * 5.0 as double).toStringAsFixed(2)),
     );
   }
+  factory Recipe.fromMapFavorite(Map<String, dynamic> map) {
+    return Recipe(
+      id: map['id'] as int,
+      title: map['name'] as String,
+      imageUrl: map['thumbnail_url'] as String,
+      rating: (map['rating'] as double),
+    );
+  }
 
   String toJson() => json.encode(toMap());
 
   factory Recipe.fromJson(String source) =>
       Recipe.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  factory Recipe.fromJsonFavorite(String source) =>
+      Recipe.fromMapFavorite(json.decode(source) as Map<String, dynamic>);
 
 
 

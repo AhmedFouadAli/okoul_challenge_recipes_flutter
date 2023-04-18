@@ -161,6 +161,8 @@ class BuildCheckList extends ConsumerWidget {
         dense: true,
         checkColor: ColorsManager.white,
         activeColor: ColorsManager.backGroundApp,
+        side: const BorderSide(
+            color: ColorsManager.white, width: 2, style: BorderStyle.solid),
         checkboxShape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
         contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
@@ -239,7 +241,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
       fit: StackFit.expand,
       children: [
         Hero(
-          tag: 400,
+          tag: recipe.id,
           child: Image.network(
             recipe.imageUrl,
             fit: BoxFit.cover,

@@ -8,8 +8,8 @@ class LoadingRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: const Color(0xff717171),
+      highlightColor: const Color(0xff9E9E9E),
       child: GridView.count(
           crossAxisCount: 2,
           children: List.generate(

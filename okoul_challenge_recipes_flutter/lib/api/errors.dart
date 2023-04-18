@@ -17,3 +17,9 @@ class UnknownErrorException implements Exception {
   @override
   String toString() => ("unknownError");
 }
+
+class ExceededApiRequest implements Exception {
+  @override
+  String toString() =>
+      ("You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. , Contact us :ahmmad.f@hotmail.com");
+}

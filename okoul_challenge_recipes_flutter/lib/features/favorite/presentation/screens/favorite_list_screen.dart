@@ -8,21 +8,20 @@ import '../../../../routing/app_router.dart';
 import '../../../recipes/domain/models/recipe.dart';
 import '../../../recipes/presentation/screens/recipe_card.dart';
 import '../../../recipes/presentation/screens/recipe_detail.dart';
-import '../../../recipes/presentation/screens/recipe_search_text_field.dart';
 import '../controllers/favorite_controller.dart';
 import 'no_favorite_screen.dart';
+import 'recipe_search_favorite.dart';
 
 final isLoadingProvider = StateProvider<bool>((ref) {
   return false;
 });
 
 class FavoriteListScreen extends ConsumerWidget {
-  FavoriteListScreen({super.key});
-  final _scrollController = ScrollController();
+  const FavoriteListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Recipe> favoriteRecipes = ref.watch(favoriteProvider);
+    final List<Recipe> favoriteRecipes = ref.watch(favoriteBySearchProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,10 +42,7 @@ class FavoriteListScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const RecipesSearchTextField(
-              hintText: "Search for  your favorite recipes  ",
-              isFavoriteSearch: true,
-            ),
+            const RecipesSearchFavorite(),
             gapH20,
             Expanded(
               child: favoriteRecipes.isEmpty
