@@ -8,17 +8,10 @@ import '../../../../constants/app_constant.dart';
 import '../models/recipe.dart';
 import '../models/recipe_details.dart';
 
-
 final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
   return RecipeRepositoryImpl();
 });
 
-// final fetchRecipeListProvider =
-//     FutureProvider.family<List<Recipe>, String>((ref, from) async {
-//   return ref
-//       .read(recipeRepositoryProvider)
-//       .fetchRecipeList(from: from.split("|")[1], query: from.split("|")[0]);
-// });
 
 final fetchRecipeDetailProvider =
     FutureProvider.autoDispose.family<RecipeDetails, String>((ref, id) async {
@@ -27,30 +20,30 @@ final fetchRecipeDetailProvider =
 
 abstract class RecipeRepository {
   Future<List<Recipe>> fetchRecipeList(
-      {required String from, required String query});
+      {required int size, required String query});
   Future<RecipeDetails> fetchRecipeDetail({required String id});
 }
 
 class RecipeRepositoryImpl extends BaseAPI implements RecipeRepository {
   @override
   Future<List<Recipe>> fetchRecipeList(
-      {required String from, required String query}) async {
-    log((from * Constant.requestSize).toString());
+      {required int size, required String query}) async {
     final getAddressApi = getAPI(ApiPaths.recipesList);
     final queryParameter = {
-      "from": (int.parse(from) * Constant.requestSize).toString(),
-      "size": Constant.requestSize.toString(),
+      "from": "0",
+      "size": (size * Constant.requestSize).toString(),
       "q": query,
     };
     final response =
         await super.get(getAddressApi, queryParams: queryParameter);
+    log("The size is $size");
 
     final resultRecipe = response["results"] as List<dynamic>;
 
     final List<Recipe> listRecipes =
         resultRecipe.map((recipe) => Recipe.fromMap(recipe)).toList();
 
-
+    log("the length of the result is ${listRecipes.length}");
     return listRecipes;
   }
 

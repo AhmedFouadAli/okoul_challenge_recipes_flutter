@@ -16,7 +16,7 @@ import 'no_recipes_screen.dart';
 import 'recipe_card.dart';
 import 'recipe_search_text_field.dart';
 
-final fromCounterProvider = StateProvider<int>((ref) => 0);
+final fromCounterProvider = StateProvider<int>((ref) => 1);
 final isLoadingProvider = StateProvider<bool>((ref) {
   return false;
 });
@@ -70,13 +70,11 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
     final maxScroll = widget._scrollController.position.maxScrollExtent;
     final currentScroll = widget._scrollController.position.pixels;
     const delta =
-        -20.0; // distance from the bottom to trigger loading more recipes
+        -50.0; // distance from the bottom to trigger loading more recipes
     if (maxScroll - currentScroll <= delta && !ref.read(isLoadingProvider)) {
-      // Todo:Adding more item when reaching to the end
       ref.read(isLoadingProvider.notifier).update((state) => !state);
       ref.read(fromCounterProvider.notifier).update((state) => state + 1);
       await Future.delayed(const Duration(seconds: 2));
-      log(ref.read(fromCounterProvider).toString());
       ref.read(isLoadingProvider.notifier).update((state) => !state);
     }
   }

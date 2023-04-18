@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,28 +15,14 @@ class RecipesControllerNotifier extends AsyncNotifier<List<Recipe>> {
   }
 
   Future<List<Recipe>> fetchRecipes() async {
-    print("Run - ${ref.watch(fromCounterProvider).toString()}");
     final userSearch = ref.watch(userSearchInputProvider);
-    state = const AsyncLoading<List<Recipe>>().copyWithPrevious(state);
-    final result = await AsyncValue.guard(() => ref
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => ref
         .read(recipeRepositoryProvider)
         .fetchRecipeList(
-            from: userSearch.isEmpty
-                ? ref.watch(fromCounterProvider).toString()
-                : "0",
+            size: ref.watch(fromCounterProvider),
             query: ref.watch(userSearchInputProvider)));
 
-    if (!result.hasError) {
-      final List<Recipe> recipes = [
-        if (userSearch.isEmpty) ...(state.value ?? []),
-        ...(result.value ?? [])
-      ];
-      log(recipes.length.toString());
-      log("/" * 50);
-      state = AsyncValue.data(recipes);
-    } else {
-      state = AsyncError<List<Recipe>>(result.error!, result.stackTrace!);
-    }
     return state.value!;
   }
 
