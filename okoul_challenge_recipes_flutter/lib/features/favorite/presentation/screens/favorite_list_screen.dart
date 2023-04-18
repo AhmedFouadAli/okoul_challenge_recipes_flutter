@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../routing/app_router.dart';
 import '../../../recipes/domain/models/recipe.dart';
@@ -25,7 +26,7 @@ class FavoriteListScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorite Recipes  '),
+        title: const Text(AppStrings.titleFavorite),
         leading: BuildReusableIcon(
           icon: const Icon(
             Icons.arrow_back_ios_new,

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
 import '../controllers/recipes_controller.dart';
 
@@ -33,7 +34,7 @@ class RecipesSearchTextField extends ConsumerWidget {
         ref.read(userSearchInputProvider.notifier).update((state) => userInput);
       },
       decoration: InputDecoration(
-        hintText: "Search for recipes ",
+        hintText: AppStrings.hintSearch,
         hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: const Icon(Icons.search, color: Colors.grey),
         suffixIcon: ref.watch(userSearchInputProvider).isEmpty

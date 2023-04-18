@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
 
 class LoadingRecipeDetail extends StatelessWidget {
@@ -38,7 +39,7 @@ class LoadingRecipeDetail extends StatelessWidget {
               ColorsManager.baseColor
             ]),
             child: Text(
-              'Ingredients',
+              AppStrings.ingredients,
               style: TextStyle(
                 fontSize: 20,
                 color: ColorsManager.white,
@@ -74,7 +75,7 @@ class LoadingRecipeDetail extends StatelessWidget {
               ColorsManager.baseColor
             ]),
             child: Text(
-              'Instructions',
+              AppStrings.instructions,
               style: TextStyle(
                 fontSize: 20,
                 color: ColorsManager.white,

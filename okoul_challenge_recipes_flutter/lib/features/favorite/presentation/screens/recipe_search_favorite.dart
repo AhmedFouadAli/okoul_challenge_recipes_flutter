@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,12 +23,12 @@ class RecipesSearchFavorite extends ConsumerWidget {
       cursorColor: ColorsManager.white,
       style: const TextStyle(color: ColorsManager.white),
       onChanged: (String userInput) async {
-         ref
+        ref
             .read(userSearchFavoritesInputProvider.notifier)
             .update((state) => userInput);
       },
       decoration: InputDecoration(
-        hintText: "Search for  your favorite recipes  ",
+        hintText: AppStrings.hintFavoriteSearch,
         hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: const Icon(Icons.search, color: Colors.grey),
         suffixIcon: ref.watch(userSearchFavoritesInputProvider).isEmpty

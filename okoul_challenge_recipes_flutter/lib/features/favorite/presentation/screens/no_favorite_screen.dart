@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/app_string.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/colors_manager.dart';
 
@@ -17,7 +18,7 @@ class NoFavoritesScreen extends ConsumerWidget {
       SvgPicture.asset(ImagesManager.noFavoriteIcon),
       gapH20,
       const Text(
-        'There is no favored recipes',
+        AppStrings.noFavorite,
         style: TextStyle(
           color: ColorsManager.white,
           fontSize: 20,
@@ -25,7 +26,7 @@ class NoFavoritesScreen extends ConsumerWidget {
       ),
       gapH4,
       const Text(
-        'Discover our delicious recipes and add them to your favorite ',
+        AppStrings.findMoreRecipe,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: ColorsManager.white,
@@ -43,7 +44,7 @@ class NoFavoritesScreen extends ConsumerWidget {
           onPressed: () {
             context.pop();
           },
-          child: const Text("Discover Recipes"))
+          child: const Text(AppStrings.discoverRecipe))
     ]);
   }
 }

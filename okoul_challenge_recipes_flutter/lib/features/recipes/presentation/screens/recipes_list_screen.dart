@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../routing/app_router.dart';
 import '../controllers/recipes_controller.dart';
@@ -62,7 +63,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Discover Recipes '),
+        title: const Text(AppStrings.titleDiscoverRecipe),
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
@@ -76,7 +77,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
             borderRadius: BorderRadius.circular(18.0),
           )),
         ),
-        child: const Text("Favorite ❤"),
+        child: const Text("${AppStrings.favoriteButton}  ❤"),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -99,7 +100,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                'Something went wrong\n',
+                                AppStrings.wrongMessage,
                                 style: TextStyle(
                                     fontSize: 20, color: ColorsManager.white),
                               ),
@@ -135,7 +136,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                                           child: CircularProgressIndicator(),
                                         )
                                       : const Text(
-                                          "Try again",
+                                          AppStrings.tryAgain,
                                           style: TextStyle(
                                               color: ColorsManager.white),
                                         ))
@@ -150,7 +151,7 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                           : LayoutBuilder(builder: (BuildContext context,
                               BoxConstraints constraints) {
                               // Calculate the desired item width based on how many items you want to show
-                               double itemWidth = 300.0;
+                              double itemWidth = 300.0;
 
                               // Calculate the number of columns that will fit based on the available width
                               int crossAxisCount =

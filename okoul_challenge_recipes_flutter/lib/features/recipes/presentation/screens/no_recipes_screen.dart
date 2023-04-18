@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../constants/app_sizes.dart';
+import '../../../../constants/app_string.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import 'recipe_search_text_field.dart';
@@ -18,7 +19,7 @@ class NoRecipesScreen extends ConsumerWidget {
         SvgPicture.asset(ImagesManager.searchIcon),
         gapH20,
         const Text(
-          'There is no results found',
+          AppStrings.noResult,
           style: TextStyle(
             color: ColorsManager.white,
             fontSize: 20,
@@ -26,7 +27,7 @@ class NoRecipesScreen extends ConsumerWidget {
         ),
         gapH4,
         const Text(
-          'Please try using different words. \nHere are suggestions',
+          AppStrings.tryDifferentWords,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: ColorsManager.white,
@@ -34,7 +35,7 @@ class NoRecipesScreen extends ConsumerWidget {
           ),
         ),
         const Text(
-          'You can just click on these suggestion',
+          AppStrings.justClick,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: ColorsManager.grey,
@@ -45,12 +46,12 @@ class NoRecipesScreen extends ConsumerWidget {
 
             // mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              BuildSuggestionBox(title: "checken"),
-              BuildSuggestionBox(title: "checken"),
-              BuildSuggestionBox(title: "checken"),
-              BuildSuggestionBox(title: "checken"),
-              BuildSuggestionBox(title: "checken"),
-              BuildSuggestionBox(title: "checken"),
+              BuildSuggestionBox(title: "chechen"),
+              BuildSuggestionBox(title: "chechen"),
+              BuildSuggestionBox(title: "chechen"),
+              BuildSuggestionBox(title: "chechen"),
+              BuildSuggestionBox(title: "chechen"),
+              BuildSuggestionBox(title: "chechen"),
             ])
       ]),
     );
@@ -78,9 +79,9 @@ class BuildSuggestionBox extends ConsumerWidget {
           color: ColorsManager.black,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child: const Text(
-          'Chicken',
-          style: TextStyle(
+        child: Text(
+          title,
+          style: const TextStyle(
             color: ColorsManager.white,
             fontSize: 20,
           ),

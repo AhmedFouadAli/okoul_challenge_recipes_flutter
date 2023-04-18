@@ -4,8 +4,11 @@ import 'package:RecipeX/features/recipes/presentation/screens/loading_recipe_det
 import 'package:RecipeX/features/recipes/presentation/screens/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
+import '../../../../routing/app_router.dart';
 import '../../../favorite/presentation/controllers/favorite_controller.dart';
 import '../../domain/models/recipe_details.dart';
 import '../../domain/repos/recipes_repository.dart';
@@ -46,7 +49,7 @@ class RecipeDetailScreen extends ConsumerWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                 child: Text(
-                  'Ingredients',
+                  AppStrings.ingredients,
                   style: TextStyle(
                     fontSize: 20,
                     color: ColorsManager.white,
@@ -70,7 +73,7 @@ class RecipeDetailScreen extends ConsumerWidget {
               child: Padding(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                  'Instructions',
+                  AppStrings.instructions,
                   style: TextStyle(
                     fontSize: 20,
                     color: ColorsManager.white,
@@ -256,7 +259,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
               color: ColorsManager.white,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              context.pushNamed(AppRoute.recipesList.name);
             },
           ),
         ),
