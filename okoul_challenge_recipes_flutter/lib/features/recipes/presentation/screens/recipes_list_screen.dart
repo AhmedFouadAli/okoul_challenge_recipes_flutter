@@ -110,8 +110,8 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
           padding:
               const EdgeInsets.only(top: 0, left: 13, right: 13, bottom: 10),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const RecipesSearchTextField(),
               gapH20,
@@ -128,8 +128,10 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
                     data: (recipesData) {
                       log(recipesData.length.toString());
                       return recipesData.isEmpty
-                          ? const SingleChildScrollView(
-                              child: NoRecipesScreen())
+                          ? const Center(
+                              child: SingleChildScrollView(
+                                  child: NoRecipesScreen()),
+                            )
                           : LayoutBuilder(builder: (BuildContext context,
                               BoxConstraints constraints) {
                               // Calculate the desired item width based on how many items you want to show

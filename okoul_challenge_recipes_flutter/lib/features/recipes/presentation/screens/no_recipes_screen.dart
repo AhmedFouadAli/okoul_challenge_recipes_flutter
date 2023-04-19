@@ -45,12 +45,13 @@ class NoRecipesScreen extends ConsumerWidget {
 
           // mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            BuildSuggestionBox(title: "chechen"),
-            BuildSuggestionBox(title: "chechen"),
-            BuildSuggestionBox(title: "chechen"),
-            BuildSuggestionBox(title: "chechen"),
-            BuildSuggestionBox(title: "chechen"),
-            BuildSuggestionBox(title: "chechen"),
+            BuildSuggestionBox(title: "Muskan"),
+            BuildSuggestionBox(title: "meal"),
+            BuildSuggestionBox(title: "tomato"),
+            BuildSuggestionBox(title: "rice"),
+            BuildSuggestionBox(title: "apple"),
+            BuildSuggestionBox(title: "chicken"),
+            BuildSuggestionBox(title: "meat"),
           ])
     ]);
   }

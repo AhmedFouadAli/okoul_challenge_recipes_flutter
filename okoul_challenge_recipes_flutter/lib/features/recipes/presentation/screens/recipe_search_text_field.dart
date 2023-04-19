@@ -24,13 +24,7 @@ class RecipesSearchTextField extends ConsumerWidget {
       cursorColor: ColorsManager.white,
       style: const TextStyle(color: ColorsManager.white),
       onChanged: (String userInput) async {
-        // Not this delay because the i have only 5 request per second
-        // The other option is to wait until the user finish what he want and then showing the result
-        // after search the User must see some response after typing
-
-        if (userInput.isNotEmpty) {
-          await Future.delayed(const Duration(milliseconds: 250));
-        }
+       
         ref.read(userSearchInputProvider.notifier).update((state) => userInput);
       },
       decoration: InputDecoration(
