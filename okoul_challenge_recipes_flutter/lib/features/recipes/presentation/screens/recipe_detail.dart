@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_string.dart';
 import '../../../../constants/colors_manager.dart';
+import '../../../../routing/app_router.dart';
 import '../../../favorite/presentation/controllers/favorite_controller.dart';
 import '../../domain/models/recipe_details.dart';
 import '../../domain/repos/recipes_repository.dart';
@@ -133,11 +134,13 @@ class RecipeDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
-        error: (Object error, StackTrace stackTrace) => ErrorRecipeList(
-          errorMessage: error.toString(),
-          isLoading: recipe.isLoading,
-          onPressed: () => ref.invalidate(fetchRecipeDetailProvider(recipeId)),
-        ),
+        error: (Object error, StackTrace stackTrace)=>ErrorRecipeList(
+                          errorMessage: error.toString(),
+                          isLoading: recipe.isLoading,
+                          onPressed: ()=>ref
+                              .invalidate(fetchRecipeDetailProvider(recipeId))
+                              ,
+                        ),
         loading: () =>
             const SingleChildScrollView(child: LoadingRecipeDetail()),
       ),
@@ -261,7 +264,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
               color: ColorsManager.white,
             ),
             onPressed: () {
-              context.pop();
+              context.pushNamed(AppRoute.recipesList.name);
             },
           ),
         ),

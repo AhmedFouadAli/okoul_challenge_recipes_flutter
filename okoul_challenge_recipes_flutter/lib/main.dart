@@ -55,7 +55,7 @@ class MyApp extends ConsumerWidget {
       routerConfig: ref.watch(GoRoterProvider),
       debugShowCheckedModeBanner: false,
       title: 'RecipeX',
-      theme: getAppTheme(),
+      theme: ref.watch(getAppThemeProvider),
     );
   }
 }
