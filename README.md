@@ -55,9 +55,9 @@ This project aims to develop a mobile app using Flutter framework that enables u
 
 We understand that seeing our project in action is essential to understanding its full potential. That's why we've included screenshots and demo videos to showcase our project's UI and functionality.
 
-But we also want to acknowledge the incredible work of our UI/UX designer, [Designer's Name], who has been instrumental in creating the stunning visuals and intuitive user experience that you see in these screenshots and demo videos.
+But we also want to acknowledge the incredible work of our UI/UX designer,  Fatimah Alamoudi, who has been instrumental in creating the stunning visuals and intuitive user experience that you see in these screenshots and demo videos.
 
-To learn more about [Designer's Name] and her/his contributions to our project, check out the [Designer](#designer)  section below .
+To learn more about  Fatimah Alamoudi and her contributions to our project, check out the [Designer](#designer)  section below .
 
 
 Note to see all the UI and video go to this section: [Photo/Video Gallery](#photovideo-gallery)
@@ -193,25 +193,26 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 Special thanks to [Okoul](https://www.okoul.com/) for providing the challenge that inspired this project. Their commitment to providing opportunities for students to apply what they learn in real projects is greatly appreciated.
 
 ## Designer
-I am absolutely thrilled to give a big shoutout to the one and only Jane Doe, our incredible UI/UX designer! Jane's boundless talent, unbridled creativity, and unwavering dedication have transformed our project into something truly extraordinary.
+I am absolutely thrilled to give a big shoutout to the one and only Fatimah Alamoudi, our incredible UI/UX designer!  Fatimah Alamoudi boundless talent, unbridled creativity, and unwavering dedication have transformed our project into something truly extraordinary.
 
 Her meticulous attention to detail, sharp creative vision, and unparalleled passion for design are truly inspiring. Working with her has been an absolute joy and privilege, and we could not have asked for a better collaborator and partner.
 
-If you're as blown away by Jane's work as we are, we encourage you to follow her on Twitter at [insert Twitter handle] and check out her portfolio to see more of her amazing designs. And if you're looking for a top-notch UI/UX designer who will elevate your project to new heights, don't hesitate to reach out to her directly via email at [insert email address].
+If you're blown away by Fatimah Alamoudi's work, we encourage you to follow her on <a href="https://twitter.com/AlamoudiBy">Twitter</a> and check out her portfolio to see more of her amazing designs. If you're looking for a top-notch UI/UX designer who will elevate your project to new heights, don't hesitate to contact her on <a href="https://twitter.com/AlamoudiBy">Twitter</a>.
 
 ### Contact information with designer
 
 <div align="center">
-  <a href="mailto:ahmedfouadali1213@gmail.com">
-    <img src="https://img.shields.io/badge/Email-ahmedfouadali1213%40gmail.com-red?style=for-the-badge&logo=gmail"/>
+  <a href="https://www.behance.net/fatimahalamoudi">
+    <img src="https://img.shields.io/badge/Behance-fatimahalamoudi-blue?style=for-the-badge&logo=behance"/>
   </a>&nbsp;&nbsp;
-  <a href="https://twitter.com/AhmedFouadAli9">
-    <img src="https://img.shields.io/badge/Twitter-%40AhmedFouadAli9-blue?style=for-the-badge&logo=twitter"/>
+  <a href="https://twitter.com/AlamoudiBy">
+    <img src="https://img.shields.io/badge/Twitter-Fatimah_Ahmed_Alamoudi-blue?style=for-the-badge&logo=twitter"/>
   </a>&nbsp;&nbsp;
-  <a href="https://www.linkedin.com/in/ahmed-fouad-ali/">
-    <img src="https://img.shields.io/badge/LinkedIn-Ahmed%20Fouad%20Ali-blue?style=for-the-badge&logo=linkedin"/>
+  <a href="https://www.linkedin.com/in/fatimah-ahmed-alamoudi/">
+    <img src="https://img.shields.io/badge/LinkedIn-Fatimah_Ahmed_Alamoudi-blue?style=for-the-badge&logo=linkedin"/>
   </a>
 </div>
+
 
 ## Photo/Video Gallery
 
