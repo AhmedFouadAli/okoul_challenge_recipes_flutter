@@ -59,6 +59,9 @@ But we also want to acknowledge the incredible work of our UI/UX designer, [Desi
 
 To learn more about [Designer's Name] and her/his contributions to our project, check out the [Designer](#designer)  section below .
 
+
+Note to see all the UI and video go to this section: [Photo/Video Gallery](#photovideo-gallery)
+
 ## Use Cases
 
 | Use Case Number | Use Case Name           | UI                         |
