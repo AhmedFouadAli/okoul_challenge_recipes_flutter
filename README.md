@@ -34,7 +34,7 @@ Goal: Implement clean architecture principles in a Flutter app using Riverpod as
     - [Contact information](#contact-information)
 7. [Acknowledgments](#acknowledgments)
 8. [Designer](#designer) 
-
+9. [Photo/Video Gallery](#photovideo-gallery)
 
 ## Introduction
 
@@ -210,3 +210,18 @@ If you're as blown away by Jane's work as we are, we encourage you to follow her
   </a>
 </div>
 
+## Photo/Video Gallery
+
+| Image 1 | Image 2 | Image 3 |
+|---------|---------|---------|
+| <img src="https://user-images.githubusercontent.com/67343431/233356384-efe545ec-3fc9-4edd-b2ac-166325db0dda.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356390-477ce341-e60c-499a-9d19-0e7a2d9ac6cf.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356394-75425e1d-f318-4e43-8f82-6f88487538f4.jpg" width="150"> |
+| Image 4 | Image 5 | Image 6 |
+| <img src="https://user-images.githubusercontent.com/67343431/233356397-25260bbc-49de-49bd-94a5-54b70654abbd.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356401-0a8f4ba1-e52f-4c21-8dbe-4f595a03eed6.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356406-e79ba460-37f1-4a98-a061-755be6ad442c.jpg" width="150"> |
+| Image 7 | Image 8 | Image 9 |
+| <img src="https://user-images.githubusercontent.com/67343431/233356408-1bbbea9d-44ea-4e4b-8c11-fa2e22cf2923.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356410-75b7cae5-9e79-412f-b550-1478ec87d429.jpg" width="150"> | <img src="https://user-images.githubusercontent.com/67343431/233356416-14d9b84e-c5af-44de-8ebd-3227795ad96e.jpg" width="150"> |
+| Image 10 |
+| <img src="https://user-images.githubusercontent.com/67343431/233356422-e1011b38-90d2-4614-972e-de4ddede4809.jpg" width="150"> |
+
+
+## video
+[![Video](https://img.youtube.com/vi/XsyRFE10YpM/0.jpg)](https://www.youtube.com/watch?v=XsyRFE10YpM)
