@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.okoul_challenge_recipes_flutter">
+      <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
    <application
-   
+
         android:label="RecipeX"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
