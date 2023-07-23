@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
+import 'package:RecipeX/features/recipes/presentation/controllers/recipes_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../constants/app_string.dart';
-import '../../../../constants/colors_manager.dart';
-import '../controllers/recipes_controller.dart';
+
 
 final userSearchInputProvider = StateProvider<String>((ref) {
   return "";
@@ -24,7 +25,7 @@ class RecipesSearchTextField extends ConsumerWidget {
       cursorColor: ColorsManager.white,
       style: const TextStyle(color: ColorsManager.white),
       onChanged: (String userInput) async {
-       
+
         ref.read(userSearchInputProvider.notifier).update((state) => userInput);
       },
       decoration: InputDecoration(

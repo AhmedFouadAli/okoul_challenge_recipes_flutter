@@ -1,13 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/assets_manager.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../constants/app_sizes.dart';
-import '../../../../constants/app_string.dart';
-import '../../../../constants/assets_manager.dart';
-import '../../../../constants/colors_manager.dart';
+
 
 class NoFavoritesScreen extends ConsumerWidget {
   const NoFavoritesScreen({super.key});

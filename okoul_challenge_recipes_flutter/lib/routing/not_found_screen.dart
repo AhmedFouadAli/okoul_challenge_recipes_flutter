@@ -1,9 +1,9 @@
+import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../constants/app_sizes.dart';
-import '../constants/app_string.dart';
-import '../constants/colors_manager.dart';
 import 'app_router.dart';
 
 /// Simple not found screen used for 404 errors (page not found on web)

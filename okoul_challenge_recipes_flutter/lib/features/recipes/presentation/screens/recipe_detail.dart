@@ -1,17 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
+import 'package:RecipeX/features/favorite/presentation/controllers/favorite_controller.dart';
+import 'package:RecipeX/features/recipes/domain/models/recipe_details.dart';
+import 'package:RecipeX/features/recipes/domain/repos/recipes_repository.dart';
 import 'package:RecipeX/features/recipes/presentation/screens/loading_recipe_detail.dart';
 import 'package:RecipeX/features/recipes/presentation/screens/recipe_card.dart';
+import 'package:RecipeX/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../constants/app_string.dart';
-import '../../../../constants/colors_manager.dart';
-import '../../../../routing/app_router.dart';
-import '../../../favorite/presentation/controllers/favorite_controller.dart';
-import '../../domain/models/recipe_details.dart';
-import '../../domain/repos/recipes_repository.dart';
+
 import 'error_recipe_list.dart';
 
 class RecipeDetailScreen extends ConsumerWidget {

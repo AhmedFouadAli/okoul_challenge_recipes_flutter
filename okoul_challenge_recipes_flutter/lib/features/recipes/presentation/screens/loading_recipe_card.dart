@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/app_constant.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../constants/app_constant.dart';
-import '../../../../constants/colors_manager.dart';
 
 class LoadingRecipeCard extends StatelessWidget {
   const LoadingRecipeCard({super.key});

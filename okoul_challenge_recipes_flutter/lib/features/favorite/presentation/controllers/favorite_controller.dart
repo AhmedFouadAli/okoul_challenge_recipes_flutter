@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:RecipeX/features/favorite/presentation/screens/recipe_search_favorite.dart';
+import 'package:RecipeX/features/recipes/domain/models/recipe.dart';
+import 'package:RecipeX/utils/app_prefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/app_prefs.dart';
-import '../../../recipes/domain/models/recipe.dart';
-import '../screens/recipe_search_favorite.dart';
+
 
 class FavoriteNotifier extends Notifier<List<Recipe>> {
   @override

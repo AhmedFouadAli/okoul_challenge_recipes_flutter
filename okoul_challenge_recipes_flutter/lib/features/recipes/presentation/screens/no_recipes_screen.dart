@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/assets_manager.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../constants/app_sizes.dart';
-import '../../../../constants/app_string.dart';
-import '../../../../constants/assets_manager.dart';
-import '../../../../constants/colors_manager.dart';
 import 'recipe_search_text_field.dart';
 
 class NoRecipesScreen extends ConsumerWidget {
@@ -41,10 +41,10 @@ class NoRecipesScreen extends ConsumerWidget {
           fontSize: 15,
         ),
       ),
-      Wrap(
+      const Wrap(
 
           // mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             BuildSuggestionBox(title: "Muskan"),
             BuildSuggestionBox(title: "meal"),
             BuildSuggestionBox(title: "tomato"),

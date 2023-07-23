@@ -1,16 +1,16 @@
 import 'dart:developer';
 
+import 'package:RecipeX/constants/app_constant.dart';
+import 'package:RecipeX/constants/app_sizes.dart';
+import 'package:RecipeX/constants/app_string.dart';
+import 'package:RecipeX/constants/colors_manager.dart';
+import 'package:RecipeX/features/recipes/presentation/controllers/recipes_controller.dart';
+import 'package:RecipeX/routing/app_router.dart';
+import 'package:RecipeX/routing/watching_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../constants/app_constant.dart';
-import '../../../../constants/app_sizes.dart';
-import '../../../../constants/app_string.dart';
-import '../../../../constants/colors_manager.dart';
-import '../../../../routing/app_router.dart';
-import '../../../../routing/watching_connection.dart';
-import '../controllers/recipes_controller.dart';
 import 'error_recipe_list.dart';
 import 'loading_recipe_card.dart';
 import 'no_recipes_screen.dart';
@@ -58,7 +58,6 @@ class _RecipesListScreenState extends ConsumerState<RecipesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final connection = ref.watch(watchingProvider);
     ref.listen(watchingProvider, (previous, next) {
       log(next.toString());
       if (next.value == connectionStatus.connected &&

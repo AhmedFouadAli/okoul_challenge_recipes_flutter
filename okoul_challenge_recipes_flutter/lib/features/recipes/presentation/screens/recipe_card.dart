@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:RecipeX/constants/colors_manager.dart';
+import 'package:RecipeX/features/favorite/presentation/controllers/favorite_controller.dart';
+import 'package:RecipeX/features/recipes/domain/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../constants/colors_manager.dart';
-import '../../../favorite/presentation/controllers/favorite_controller.dart';
-import '../../domain/models/recipe.dart';
 
 class RecipeCard extends ConsumerWidget {
   final Recipe recipe;
@@ -24,7 +23,6 @@ class RecipeCard extends ConsumerWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(recipe.imageUrl),
-            
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(15),
@@ -84,9 +82,6 @@ class BuildFavoriteRecipe extends ConsumerWidget {
     final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
     return IconButton(
         onPressed: () {
-          ref.read(favoriteProvider.notifier).state.forEach((element) {
-            print(element);
-          });
           ref.read(favoriteProvider.notifier).toggle(recipe);
         },
         icon: Icon(

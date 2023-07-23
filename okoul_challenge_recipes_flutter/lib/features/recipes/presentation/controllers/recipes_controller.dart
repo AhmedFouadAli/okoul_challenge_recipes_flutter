@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:RecipeX/features/recipes/domain/models/recipe.dart';
+import 'package:RecipeX/features/recipes/domain/repos/recipes_repository.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/recipe_search_text_field.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/recipes_list_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/models/recipe.dart';
-import '../../domain/repos/recipes_repository.dart';
-import '../screens/recipe_search_text_field.dart';
-import '../screens/recipes_list_screen.dart';
+
 
 class RecipesControllerNotifier extends AsyncNotifier<List<Recipe>> {
   @override

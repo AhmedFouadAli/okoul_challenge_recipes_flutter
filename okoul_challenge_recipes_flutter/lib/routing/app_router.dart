@@ -1,11 +1,11 @@
 import 'dart:developer';
 
+import 'package:RecipeX/features/favorite/presentation/screens/favorite_list_screen.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/recipe_detail.dart';
+import 'package:RecipeX/features/recipes/presentation/screens/recipes_list_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../features/favorite/presentation/screens/favorite_list_screen.dart';
-import '../features/recipes/presentation/screens/recipe_detail.dart';
-import '../features/recipes/presentation/screens/recipes_list_screen.dart';
 import 'not_found_screen.dart';
 
 enum AppRoute {
@@ -18,7 +18,7 @@ final GoRoterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: "/",
     debugLogDiagnostics: true,
-    errorBuilder: (context, state) => NotFoundScreen(),
+    errorBuilder: (context, state) => const NotFoundScreen(),
     routes: [
       GoRoute(
           path: '/',

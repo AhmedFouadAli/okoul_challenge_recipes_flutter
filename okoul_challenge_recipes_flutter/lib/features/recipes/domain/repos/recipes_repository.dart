@@ -1,12 +1,13 @@
 import 'dart:developer';
 
+import 'package:RecipeX/api/api_paths.dart';
+import 'package:RecipeX/api/base.dart';
+import 'package:RecipeX/constants/app_constant.dart';
+import 'package:RecipeX/features/recipes/domain/models/recipe.dart';
+import 'package:RecipeX/features/recipes/domain/models/recipe_details.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../api/api_paths.dart';
-import '../../../../api/base.dart';
-import '../../../../constants/app_constant.dart';
-import '../models/recipe.dart';
-import '../models/recipe_details.dart';
+
 
 final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
   return RecipeRepositoryImpl();

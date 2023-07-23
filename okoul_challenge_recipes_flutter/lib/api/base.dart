@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:RecipeX/api/settings.dart';
+import 'package:RecipeX/keys/api_keys.dart';
 import 'package:http/http.dart' as http;
 
-import '../keys/api_keys.dart';
 import 'errors.dart';
 
 class BaseAPI {
@@ -61,7 +61,7 @@ class BaseAPI {
       }
       http.Response response = await http.get(api, headers: requestHeaders);
       final jsonData = jsonDecode(response.body);
- 
+
       if (response.statusCode == HttpStatus.unauthorized) {
         throw UnauthorizedException();
       } else if (response.statusCode == HttpStatus.internalServerError) {
